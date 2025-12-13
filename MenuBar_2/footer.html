@@ -35,8 +35,15 @@
       };
 
       const sections = document.querySelectorAll('.section_wrap.pc_section');
-      const textSpans = navElement.querySelectorAll('.custom-flow-container .custom-flow-text span');
+      const textSpans = navElement.querySelectorAll('span');
       const menuDivs = navElement.querySelectorAll('.menuToggle.customMenu p');
+      const dropdownToggles = navElement.querySelectorAll('.dropdown-toggle');
+      const inlineWidgets = navElement.querySelectorAll('.inline-widget');
+
+      // ::after 가상 요소 스타일을 동적으로 변경하기 위한 style 태그 생성
+      const dynamicStyle = document.createElement('style');
+      dynamicStyle.id = 'nav-dynamic-styles';
+      document.head.appendChild(dynamicStyle);
 
       const navStyles = {
         opaque: {
@@ -65,15 +72,35 @@
 
         textSpans.forEach((span) => {
           span.style.color = currentStyle.color;
+          span.style.borderBottomColor = currentStyle.color;
         });
 
         menuDivs.forEach((p) => {
-          p.style.backgroundColor = currentStyle.color;
+          p.style.setProperty('background-color', currentStyle.color, 'important');
         });
 
         menu.forEach((div) => {
           div.style.borderColor = currentStyle.borderColor;
         });
+
+        dropdownToggles.forEach((toggle) => {
+          toggle.style.borderColor = currentStyle.borderColor;
+        });
+
+        inlineWidgets.forEach((widget) => {
+          widget.style.borderTopColor = currentStyle.borderColor;
+          widget.style.borderBottomColor = currentStyle.borderColor;
+          widget.style.borderLeftColor = currentStyle.borderColor;
+          widget.style.borderRightColor = currentStyle.borderColor;
+        });
+
+        // ::after 가상 요소의 배경색 동적으로 변경
+        dynamicStyle.textContent = `
+          #w20250826fabef1ba6c6de .global_text::after,
+          #w20250901d30d73ce03676 .global_text::after {
+            background-color: ${currentStyle.color} !important;
+          }
+        `;
 
         const whiteLogo = navElement.querySelectorAll('.flow-logo-white');
         const blackLogo = navElement.querySelectorAll('.flow-logo-black');
@@ -97,7 +124,7 @@
             document.body.style.position = 'fixed';
             document.body.style.width = '100%';
             document.body.style.height = '100%';
-            
+
             this.setAttribute('aria-expanded', 'true');
             updateStyles(navStyles.black);
           } else {
@@ -107,7 +134,7 @@
               document.body.style.position = '';
               document.body.style.width = '';
               document.body.style.height = '';
-              
+
               this.setAttribute('aria-expanded', 'false');
             }, 1000);
             setTimeout(() => {
