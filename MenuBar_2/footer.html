@@ -46,11 +46,11 @@
         },
         white: {
           backgroundColor: 'rgb(255, 255, 255)',
-          color: '#000',
-          borderColor: 'rgba(0, 0, 0, 0.2)',
+          color: '#152147',
+          borderColor: 'rgba(21, 33, 71, 0.2)',
         },
         black: {
-          backgroundColor: 'rgb(0, 0, 0)',
+          backgroundColor: '#152147',
           color: '#fff',
           borderColor: 'rgba(255, 255, 255, 0.2)',
         },
@@ -77,11 +77,11 @@
 
         const whiteLogo = navElement.querySelectorAll('.flow-logo-white');
         const blackLogo = navElement.querySelectorAll('.flow-logo-black');
-        
+
         if (currentStyle.color === '#fff') {
           whiteLogo.forEach(logo => logo.style.display = 'block');
           blackLogo.forEach(logo => logo.style.display = 'none');
-        } else {
+        } else if (currentStyle.color === '#152147') {
           whiteLogo.forEach(logo => logo.style.display = 'none');
           blackLogo.forEach(logo => logo.style.display = 'block');
         }
