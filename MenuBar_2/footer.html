@@ -19,22 +19,31 @@
         return false;
       }
 
-      // 각 섹션별 배경색 명시적 지정
-      const sectionColors = {
-        's202507012c13dbe9bfd3d': 'white',
-        's202507015b37210bd8139': 'white',
-        's202507012de9911fded25': 'white',
-        's20250826cb316a1ecba50': 'white',
-        's202507018d8322a2fd389': 'black',
-        's2025070113fe458cba567': 'black',
-        's20250701cfd3071397a2a': 'white',
-        's202507015a429359b165a': 'black',
-        's20250701dbcd534faee2c': 'black',
-        's202507012170110d7c57d': 'black',
-        's20250701f457bab25e7df': 'white',
-        's20250701e11089f3b7131': 'white',
-        's20250701850c08f917f9f': 'white'
-      };
+      // ============================================================
+      // 섹션별 네비게이션 바 테마 설정
+      // - 'light': 화이트 배경 (#FFFFFF) + 네이비 텍스트 (#152147)
+      // - 'dark':  네이비 배경 (#152147) + 화이트 텍스트 (#FFFFFF)
+      // ============================================================
+      const darkSections = [
+        's202507018d8322a2fd389',
+        's2025070113fe458cba567',
+        's202507015a429359b165a',
+        's20250701dbcd534faee2c',
+        's202507012170110d7c57d'
+      ];
+
+      const sectionColors = {};
+      const allSections = [
+        's202507012c13dbe9bfd3d', 's202507015b37210bd8139', 's202507012de9911fded25',
+        's20250826cb316a1ecba50', 's202507018d8322a2fd389', 's2025070113fe458cba567',
+        's20250701cfd3071397a2a', 's202507015a429359b165a', 's20250701dbcd534faee2c',
+        's202507012170110d7c57d', 's20250701f457bab25e7df', 's20250701e11089f3b7131',
+        's20250701850c08f917f9f'
+      ];
+
+      allSections.forEach(id => {
+        sectionColors[id] = darkSections.includes(id) ? 'dark' : 'light';
+      });
 
       const sections = document.querySelectorAll('.section_wrap.pc_section');
       const textSpans = navElement.querySelectorAll('span');
@@ -47,18 +56,21 @@
       dynamicStyle.id = 'nav-dynamic-styles';
       document.head.appendChild(dynamicStyle);
 
+      // ============================================================
+      // 네비게이션 바 스타일 테마
+      // ============================================================
       const navStyles = {
         opaque: {
           backgroundColor: 'rgba(0, 0, 0, 0.25)',
           color: '#fff',
           borderColor: 'rgba(255, 255, 255, 0.2)',
         },
-        white: {
+        light: {
           backgroundColor: 'rgb(255, 255, 255)',
           color: '#152147',
           borderColor: 'rgba(21, 33, 71, 0.2)',
         },
-        black: {
+        dark: {
           backgroundColor: '#152147',
           color: '#fff',
           borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -135,7 +147,7 @@
             this.setAttribute('aria-expanded', 'true');
             if (slidingElement) slidingElement.classList.add('active');
             if (slidingContent) slidingContent.classList.add('active');
-            updateStyles(navStyles.black);
+            updateStyles(navStyles.dark);
           } else {
             if (slidingContent) slidingContent.classList.remove('active');
 
@@ -152,7 +164,7 @@
               if (slidingElement) slidingElement.classList.remove('active');
             }, 1000);
             setTimeout(() => {
-              updateStyles(navStyles.white);
+              updateStyles(navStyles.light);
             }, 1600);
           }
         });
@@ -164,16 +176,16 @@
           section.dataset.background = sectionColors[section.id];
           console.log(`Section ${index} (${section.id}): ${sectionColors[section.id]}`);
         } else {
-          // 정의되지 않은 섹션은 기본값 white
-          section.dataset.background = 'white';
-          console.log(`Section ${index} (${section.id}): white (default)`);
+          // 정의되지 않은 섹션은 기본값 light
+          section.dataset.background = 'light';
+          console.log(`Section ${index} (${section.id}): light (default)`);
         }
       });
 
       function updateNavBackground() {
-        // 스크롤이 최좌측이면 white 적용
+        // 스크롤이 최좌측이면 light 테마 적용
         if (window.pageXOffset === 0 && window.pageYOffset === 0) {
-          updateStyles(navStyles.white);
+          updateStyles(navStyles.light);
           return;
         }
 
@@ -205,9 +217,9 @@
           currentStyle = navStyles[targetSection.dataset.background];
         }
 
-        // currentStyle이 없으면 기본값 white 적용
+        // currentStyle이 없으면 기본값 light 적용
         if (!currentStyle) {
-          currentStyle = navStyles.white;
+          currentStyle = navStyles.light;
         }
 
         if (currentStyle && navElement.style.backgroundColor !== currentStyle.backgroundColor) {
@@ -217,7 +229,7 @@
       }
 
       window.addEventListener('scroll', updateNavBackground);
-      Object.assign(navElement.style, navStyles.white);
+      Object.assign(navElement.style, navStyles.light);
       updateNavBackground();
 
       initialized = true;
