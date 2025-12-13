@@ -130,9 +130,9 @@
       });
 
       function updateNavBackground() {
-        // 스크롤이 최좌측이면 opaque 적용
+        // 스크롤이 최좌측이면 white 적용
         if (window.pageXOffset === 0 && window.pageYOffset === 0) {
-          updateStyles(navStyles.opaque);
+          updateStyles(navStyles.white);
           return;
         }
 
@@ -176,7 +176,7 @@
       }
 
       window.addEventListener('scroll', updateNavBackground);
-      Object.assign(navElement.style, navStyles.opaque);
+      Object.assign(navElement.style, navStyles.white);
       updateNavBackground();
 
       initialized = true;
