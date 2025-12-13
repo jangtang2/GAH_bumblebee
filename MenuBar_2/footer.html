@@ -1,14 +1,226 @@
-<!-- 상단 메뉴 배경 색상 변경 스크립트 - 레이아웃 수정 20251030 -->
+<!-- 상단 메뉴 배경 색상 변경 스크립트(PC) - 개선 버전 -->
 <script>
   (function () {
-    if (window.innerWidth > 991) {
-      window.debugLog && debugLog('❌ 데스크톱 크기 - 모바일 스크립트 종료', '#f00');
-      return;
+    if (window.innerWidth < 992) return;
+
+    let initialized = false;
+
+    function initMenu() {
+      if (initialized) {
+        return true;
+      }
+
+      const navElement = document.querySelector('#s2025070198187fb0bd6e3');
+      const menu = document.querySelectorAll('.menuToggle.customMenu');
+
+      if (!navElement || menu.length === 0) {
+        return false;
+      }
+
+      // 각 섹션별 배경색 명시적 지정
+      const sectionColors = {
+        's202507012c13dbe9bfd3d': 'white',
+        's202507015b37210bd8139': 'white',
+        's202507012de9911fded25': 'white',
+        's20250826cb316a1ecba50': 'white',
+        's202507018d8322a2fd389': 'black',
+        's2025070113fe458cba567': 'black',
+        's20250701cfd3071397a2a': 'white',
+        's202507015a429359b165a': 'black',
+        's20250701dbcd534faee2c': 'black',
+        's202507012170110d7c57d': 'black',
+        's20250701f457bab25e7df': 'white',
+        's20250701e11089f3b7131': 'white',
+        's20250701850c08f917f9f': 'white'
+      };
+
+      const sections = document.querySelectorAll('.section_wrap.pc_section');
+      const textSpans = navElement.querySelectorAll('.custom-flow-container .custom-flow-text span');
+      const menuDivs = navElement.querySelectorAll('.menuToggle.customMenu p');
+
+      const navStyles = {
+        opaque: {
+          backgroundColor: 'rgba(0, 0, 0, 0.25)',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+        white: {
+          backgroundColor: 'rgb(255, 255, 255)',
+          color: '#000',
+          borderColor: 'rgba(0, 0, 0, 0.2)',
+        },
+        black: {
+          backgroundColor: 'rgb(0, 0, 0)',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+      };
+
+      function updateStyles(currentStyle) {
+        Object.assign(navElement.style, {
+          backgroundColor: currentStyle.backgroundColor,
+          color: currentStyle.color,
+          borderColor: currentStyle.borderColor,
+        });
+
+        textSpans.forEach((span) => {
+          span.style.color = currentStyle.color;
+        });
+
+        menuDivs.forEach((p) => {
+          p.style.backgroundColor = currentStyle.color;
+        });
+
+        menu.forEach((div) => {
+          div.style.borderColor = currentStyle.borderColor;
+        });
+
+        const whiteLogo = navElement.querySelectorAll('.flow-logo-white');
+        const blackLogo = navElement.querySelectorAll('.flow-logo-black');
+        
+        if (currentStyle.color === '#fff') {
+          whiteLogo.forEach(logo => logo.style.display = 'block');
+          blackLogo.forEach(logo => logo.style.display = 'none');
+        } else {
+          whiteLogo.forEach(logo => logo.style.display = 'none');
+          blackLogo.forEach(logo => logo.style.display = 'block');
+        }
+      }
+
+      menu.forEach(function (menuBtn) {
+        menuBtn.addEventListener('click', function () {
+          let expanded = this.getAttribute('aria-expanded') === 'true';
+
+          if (!expanded) {
+            document.body.classList.add('no-scroll');
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.height = '100%';
+            
+            this.setAttribute('aria-expanded', 'true');
+            updateStyles(navStyles.black);
+          } else {
+            setTimeout(() => {
+              document.body.classList.remove('no-scroll');
+              document.body.style.overflow = '';
+              document.body.style.position = '';
+              document.body.style.width = '';
+              document.body.style.height = '';
+              
+              this.setAttribute('aria-expanded', 'false');
+            }, 1000);
+            setTimeout(() => {
+              updateStyles(navStyles.opaque);
+            }, 1600);
+          }
+        });
+      });
+
+      sections.forEach((section, index) => {
+        // 섹션별 배경색 지정 (명시적으로 정의된 것만)
+        if (sectionColors[section.id]) {
+          section.dataset.background = sectionColors[section.id];
+          console.log(`Section ${index} (${section.id}): ${sectionColors[section.id]}`);
+        } else {
+          // 정의되지 않은 섹션은 기본값 white
+          section.dataset.background = 'white';
+          console.log(`Section ${index} (${section.id}): white (default)`);
+        }
+      });
+
+      function updateNavBackground() {
+        // 스크롤이 최좌측이면 opaque 적용
+        if (window.pageXOffset === 0 && window.pageYOffset === 0) {
+          updateStyles(navStyles.opaque);
+          return;
+        }
+
+        let currentStyle = null;
+        let targetSection = null;
+        let minDistance = Infinity;
+
+        console.log('=== Scroll Detection ===');
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          const zIndex = window.getComputedStyle(section).zIndex;
+          console.log(`${section.id}: left=${rect.left.toFixed(1)}, right=${rect.right.toFixed(1)}, width=${rect.width.toFixed(1)}, z-index=${zIndex}, bg=${section.dataset.background}`);
+
+          // 화면 왼쪽 경계 근처에 있는 섹션 찾기
+          // left가 0에 가까우면서, right가 화면 내에 있는 섹션만 선택
+          if (rect.left <= 50 && rect.left > -rect.width && rect.right > 100 && rect.width > 0) {
+            const distance = Math.abs(rect.left);
+            // 같은 거리면 나중에 나온 섹션(DOM 순서상 위에 있을 가능성 높음)을 선택
+            if (distance <= minDistance) {
+              minDistance = distance;
+              targetSection = section;
+            }
+          }
+        });
+
+        // 가장 가까운 섹션의 배경 스타일 적용
+        if (targetSection && targetSection.dataset.background) {
+          console.log(`>>> Selected: ${targetSection.id}, bg=${targetSection.dataset.background}, left=${targetSection.getBoundingClientRect().left.toFixed(1)}`);
+          currentStyle = navStyles[targetSection.dataset.background];
+        }
+
+        // currentStyle이 없으면 기본값 white 적용
+        if (!currentStyle) {
+          currentStyle = navStyles.white;
+        }
+
+        if (currentStyle && navElement.style.backgroundColor !== currentStyle.backgroundColor) {
+          console.log(`Updating nav to: ${targetSection?.dataset.background}`);
+          updateStyles(currentStyle);
+        }
+      }
+
+      window.addEventListener('scroll', updateNavBackground);
+      Object.assign(navElement.style, navStyles.opaque);
+      updateNavBackground();
+
+      initialized = true;
+      return true;
     }
 
-    window.debugLog && debugLog('✅ 모바일 스크립트 시작', '#0f0');
-    
-    // CSS로 강제 차단 추가 + loading-txt 숨기기 - 20251030 
+    let attemptCount = 0;
+    const maxAttempts = 30;
+
+    function tryInitialize() {
+      if (initialized) return;
+      
+      attemptCount++;
+      
+      if (initMenu()) {
+        return;
+      }
+      
+      if (attemptCount < maxAttempts) {
+        setTimeout(tryInitialize, 200);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryInitialize);
+    } else {
+      tryInitialize();
+    }
+
+    window.addEventListener('load', function() {
+      setTimeout(tryInitialize, 100);
+      setTimeout(tryInitialize, 500);
+      setTimeout(tryInitialize, 1000);
+    });
+
+  })();
+</script>
+
+<!-- 상단 메뉴 배경 색상 변경 스크립트(Mobile) - 개선 버전 -->
+<script>
+  (function () {
+    if (window.innerWidth > 991) return;
+
+    // CSS 강제 적용 + loading-txt 차단
     const style = document.createElement('style');
     style.textContent = `
       .menuToggle.customMenu.mo * {
@@ -18,49 +230,36 @@
         pointer-events: auto !important;
         z-index: 10000 !important;
       }
-      /* loading-txt가 메뉴를 가리지 못하도록 */
       p.loading-txt {
         pointer-events: none !important;
         z-index: -1 !important;
       }
     `;
     document.head.appendChild(style);
-    window.debugLog && debugLog('🎨 CSS 강제 적용 완료 (loading-txt 차단 포함)', '#0ff');
     
-    // loading-txt 요소를 직접 찾아서 숨기기 - 20251030
+    // loading-txt 요소 직접 숨기기
     setTimeout(function() {
       const loadingElements = document.querySelectorAll('p.loading-txt');
-      window.debugLog && debugLog(`🔍 loading-txt 요소 ${loadingElements.length}개 발견`, '#fa0');
-      loadingElements.forEach((el, i) => {
+      loadingElements.forEach((el) => {
         el.style.setProperty('pointer-events', 'none', 'important');
         el.style.setProperty('z-index', '-1', 'important');
         el.style.setProperty('display', 'none', 'important');
-        window.debugLog && debugLog(`  [${i}] loading-txt 비활성화`, '#0f0');
       });
     }, 100);
-    
+
     let initialized = false;
 
     function initMenu() {
       if (initialized) {
-        window.debugLog && debugLog('⚠️ 이미 초기화됨 - 스킵', '#fa0');
         return true;
       }
-
-      window.debugLog && debugLog('━━━━ 초기화 시도 ━━━━', '#0ff');
 
       const navElement = document.querySelector('#s202507018bdbf5f2ae522');
       const slidingElement = document.getElementById('s20250701850c08f917f9f');
       const slidingContent = document.querySelector('.custom-menu-container');
       const menu = document.querySelectorAll('.menuToggle.customMenu.mo');
 
-      window.debugLog && debugLog(`🔍 Nav 요소: ${navElement ? '✓ 존재' : '✗ 없음'}`, navElement ? '#0f0' : '#f00');
-      window.debugLog && debugLog(`🔍 Sliding 요소: ${slidingElement ? '✓ 존재' : '✗ 없음'}`, slidingElement ? '#0f0' : '#f00');
-      window.debugLog && debugLog(`🔍 Content 요소: ${slidingContent ? '✓ 존재' : '✗ 없음'}`, slidingContent ? '#0f0' : '#f00');
-      window.debugLog && debugLog(`🔍 Menu 버튼: ${menu.length}개`, menu.length > 0 ? '#0f0' : '#f00');
-
       if (!navElement || !slidingElement || !slidingContent || menu.length === 0) {
-        window.debugLog && debugLog('❌ 필수 요소 부족 - 초기화 실패', '#f00');
         return false;
       }
 
@@ -73,7 +272,7 @@
       const navStyles = {
         opaque: {
           backgroundColor: 'rgba(0, 0, 0, 0.25)',
-          color: '#fff',
+          color: '#c49a6c',
           borderColor: 'rgba(187, 149, 111, 0.5)',
         },
         white: {
@@ -108,50 +307,23 @@
         });
       }
 
-      menu.forEach(function (menuBtn, index) {
-        window.debugLog && debugLog(`━━━ 메뉴 버튼 ${index} 설정 시작 ━━━`, '#ff0');
-        
-        // 버튼의 현재 스타일 상태 확인
-        const computedStyle = window.getComputedStyle(menuBtn);
-        window.debugLog && debugLog(`  pointerEvents: ${computedStyle.pointerEvents}`, '#aaa');
-        window.debugLog && debugLog(`  display: ${computedStyle.display}`, '#aaa');
-        window.debugLog && debugLog(`  zIndex: ${computedStyle.zIndex}`, '#aaa');
-        
-        // 자식 요소 확인
-        const children = menuBtn.querySelectorAll('*');
-        window.debugLog && debugLog(`  자식 요소: ${children.length}개`, '#aaa');
-        
+      menu.forEach(function (menuBtn) {
         // 자식 요소들의 pointer-events 비활성화
-        children.forEach((child, i) => {
+        const children = menuBtn.querySelectorAll('*');
+        children.forEach((child) => {
           child.style.setProperty('pointer-events', 'none', 'important');
-          void child.offsetHeight;
         });
         
-        // position은 건드리지 않고 z-index만 적용
         menuBtn.style.setProperty('pointer-events', 'auto', 'important');
         menuBtn.style.setProperty('z-index', '10000', 'important');
-        menuBtn.style.border = '2px solid red';
-        menuBtn.style.boxSizing = 'border-box';
-        
-        void menuBtn.offsetHeight;
-        
-        const finalPE = window.getComputedStyle(menuBtn).pointerEvents;
-        const finalZ = window.getComputedStyle(menuBtn).zIndex;
-        window.debugLog && debugLog(`✅ 버튼 ${index} 최종 pointerEvents: ${finalPE}, zIndex: ${finalZ}`, '#0f0');
         
         const handleMenuClick = function (e) {
-          window.debugLog && debugLog(`━━━ 🎯 메뉴 핸들러 호출! ━━━`, '#f0f');
-          window.debugLog && debugLog(`  이벤트 타입: ${e.type}`, '#f0f');
-          window.debugLog && debugLog(`  클릭된 요소: ${e.target.tagName}.${e.target.className}`, '#f0f');
-          
           e.preventDefault();
           e.stopPropagation();
           
           let expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-          window.debugLog && debugLog(`  현재 상태: ${expanded ? '열림' : '닫힘'}`, '#ff0');
 
           if (!expanded) {
-            window.debugLog && debugLog('🔓 메뉴 열기 시작...', '#0f0');
             document.body.classList.add('no-scroll');
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
@@ -162,9 +334,7 @@
             slidingElement.classList.add('active');
             slidingContent.classList.add('active');
             updateStyles(navStyles.black);
-            window.debugLog && debugLog('✅ 메뉴 열림 완료!', '#0f0');
           } else {
-            window.debugLog && debugLog('🔒 메뉴 닫기 시작...', '#f90');
             slidingContent.classList.remove('active');
             setTimeout(() => {
               document.body.classList.remove('no-scroll');
@@ -175,7 +345,6 @@
               
               menuBtn.setAttribute('aria-expanded', 'false');
               slidingElement.classList.remove('active');
-              window.debugLog && debugLog('✅ 메뉴 닫힘 완료!', '#f90');
             }, 1000);
             setTimeout(() => {
               updateStyles(navStyles.opaque);
@@ -183,15 +352,8 @@
           }
         };
 
-        window.debugLog && debugLog(`  touchstart 이벤트 등록 중...`, '#0af');
         menuBtn.addEventListener('touchstart', handleMenuClick, { passive: false });
-        window.debugLog && debugLog(`  ✓ touchstart 등록 완료`, '#0af');
-        
-        window.debugLog && debugLog(`  click 이벤트 등록 중...`, '#0af');
         menuBtn.addEventListener('click', handleMenuClick);
-        window.debugLog && debugLog(`  ✓ click 등록 완료`, '#0af');
-        
-        window.debugLog && debugLog(`✅ 버튼 ${index} 이벤트 등록 완료!`, '#0f0');
       });
 
       sections.forEach((section, index) => {
@@ -231,7 +393,6 @@
       updateNavBackground();
 
       initialized = true;
-      window.debugLog && debugLog('🎉🎉🎉 초기화 완전 완료! 🎉🎉🎉', '#0ff');
       return true;
     }
 
@@ -242,45 +403,26 @@
       if (initialized) return;
       
       attemptCount++;
-      window.debugLog && debugLog(`🔄 초기화 시도 ${attemptCount}/${maxAttempts}`, '#fa0');
       
       if (initMenu()) {
-        window.debugLog && debugLog(`✅ ${attemptCount}번째 시도에서 성공!`, '#0f0');
         return;
       }
       
       if (attemptCount < maxAttempts) {
         setTimeout(tryInitialize, 200);
-      } else {
-        window.debugLog && debugLog('💀💀💀 최대 시도 횟수 초과 - 초기화 실패 💀💀💀', '#f00');
       }
     }
 
     if (document.readyState === 'loading') {
-      window.debugLog && debugLog('📄 readyState=loading, DOMContentLoaded 대기 중...', '#0af');
-      document.addEventListener('DOMContentLoaded', function() {
-        window.debugLog && debugLog('📄 DOMContentLoaded 이벤트 발생!', '#0f0');
-        tryInitialize();
-      });
+      document.addEventListener('DOMContentLoaded', tryInitialize);
     } else {
-      window.debugLog && debugLog('📄 이미 로드된 상태 (readyState=' + document.readyState + ')', '#0f0');
       tryInitialize();
     }
 
     window.addEventListener('load', function() {
-      window.debugLog && debugLog('🌐 window load 이벤트 발생!', '#0ff');
-      setTimeout(function() {
-        window.debugLog && debugLog('⏱️ load+100ms 재시도', '#fa0');
-        tryInitialize();
-      }, 100);
-      setTimeout(function() {
-        window.debugLog && debugLog('⏱️ load+500ms 재시도', '#fa0');
-        tryInitialize();
-      }, 500);
-      setTimeout(function() {
-        window.debugLog && debugLog('⏱️ load+1000ms 재시도', '#fa0');
-        tryInitialize();
-      }, 1000);
+      setTimeout(tryInitialize, 100);
+      setTimeout(tryInitialize, 500);
+      setTimeout(tryInitialize, 1000);
     });
 
   })();
