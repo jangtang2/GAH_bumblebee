@@ -117,15 +117,20 @@
       }
 
       menu.forEach(function (menuBtn) {
+        let scrollPos = 0;
+
         menuBtn.addEventListener('click', function () {
           let expanded = this.getAttribute('aria-expanded') === 'true';
 
           if (!expanded) {
+            // 현재 스크롤 위치 저장
+            scrollPos = window.pageYOffset || window.scrollY;
+
             document.body.classList.add('no-scroll');
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPos}px`;
             document.body.style.width = '100%';
-            document.body.style.height = '100%';
 
             this.setAttribute('aria-expanded', 'true');
             if (slidingElement) slidingElement.classList.add('active');
@@ -133,13 +138,16 @@
             updateStyles(navStyles.black);
           } else {
             if (slidingContent) slidingContent.classList.remove('active');
-            setTimeout(() => {
-              document.body.classList.remove('no-scroll');
-              document.body.style.overflow = '';
-              document.body.style.position = '';
-              document.body.style.width = '';
-              document.body.style.height = '';
 
+            // 스크롤 즉시 복원
+            document.body.classList.remove('no-scroll');
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, scrollPos);
+
+            setTimeout(() => {
               this.setAttribute('aria-expanded', 'false');
               if (slidingElement) slidingElement.classList.remove('active');
             }, 1000);
