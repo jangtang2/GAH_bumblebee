@@ -51,3 +51,104 @@
     </div>
   </a>
 </div>
+
+▼▼▼▼▼▼▼▼▼▼▼▼
+
+<!-- 플로팅 배너 (Body 코드에 삽입) -->
+<style>
+.floating-banner {
+  position: fixed;
+  right: 32px;
+  bottom: 25px;
+  z-index: 9999;
+  display: flex;
+  gap: 12px;
+}
+.floating-banner .floating-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.floating-banner .floating-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 카카오톡 아이콘 - 0~6% 구간에 튀기 */
+.floating-banner .kakao-icon {
+  animation: bounce-kakao 6s ease-in-out infinite;
+}
+
+/* 문의 아이콘 - 10~16% 구간에 튀기 */
+.floating-banner .inquiry-icon {
+  animation: bounce-inquiry 6s ease-in-out infinite;
+}
+
+@keyframes bounce-kakao {
+  0%, 100% {
+    transform: scale(1);
+  }
+  3% {
+    transform: scale(1.25);
+  }
+  6% {
+    transform: scale(1);
+  }
+  7%, 100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-inquiry {
+  0%, 10% {
+    transform: scale(1);
+  }
+  13% {
+    transform: scale(1.25);
+  }
+  16% {
+    transform: scale(1);
+  }
+  17%, 100% {
+    transform: scale(1);
+  }
+}
+
+/* 호버 효과 */
+.floating-banner .floating-icon:hover {
+  transform: scale(1.15) !important;
+}
+
+@media (max-width: 600px) {
+  .floating-banner {
+    right: 16px;
+    bottom: 16px;
+    gap: 7px;
+  }
+  .floating-banner .floating-icon {
+    width: 50px;
+    height: 50px;
+  }
+}
+</style>
+<div class="floating-banner">
+  <!-- 카카오톡 문의 아이콘 -->
+  <a href="https://pf.kakao.com/_여기에_채널_ID" target="_blank" rel="noopener">
+    <div class="floating-icon kakao-icon" title="카카오톡 상담">
+      <img src="https://cdn.imweb.me/upload/S20250701636b2d7c93b2a/dc5dec9aad68f.png" alt="카카오톡 상담 아이콘">
+    </div>
+  </a>
+  <!-- 문의(물음표) 아이콘 -->
+  <a href="https://bbdgoahan.imweb.me/18" target="_blank" rel="noopener">
+    <div class="floating-icon inquiry-icon" title="문의">
+      <img src="https://cdn.imweb.me/upload/S20250701636b2d7c93b2a/140417d40ee26.png" alt="문의 아이콘">
+    </div>
+  </a>
+</div>
