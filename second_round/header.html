@@ -1,0 +1,571 @@
+<!-- 상단 메뉴 스타일 코드 -->
+<style>
+  #w20250701185c783f009ad {
+    width: 80vh;
+    position: relative;
+    margin: auto;
+  }
+
+  .custom-flow-text {
+    display: flex;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 0.4vh;
+  }
+
+  .custom-flow-wrap {
+    animation: custom-textLoop 35s linear infinite;
+    padding-right: 1.4881vw;
+  }
+
+  .custom-flow-wrap span {
+    color: black;
+  }
+
+  @keyframes custom-textLoop {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  #s2025070198187fb0bd6e3,
+  #inline_header_normal #s2025070198187fb0bd6e3 {
+    transform: rotate(-90deg);
+    top: 100% !important;
+    transform-origin: top left;
+    position: fixed;
+    width: 100vh !important;
+    z-index: 999;
+    transition-property: background-color, border-color, color;
+    transition-duration: .3s;
+  }
+
+  #s2025070198187fb0bd6e3 .inline-inside._inline-inside,
+  #inline_header_normal #s2025070198187fb0bd6e3 .inline-inside._inline-inside {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #s2025070198187fb0bd6e3 .inline-col-group,
+  #inline_header_normal #s2025070198187fb0bd6e3 .inline-col-group {
+    height: fit-content;
+  }
+
+  #s202507018bdbf5f2ae522 {
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+  }
+
+  #s202507018bdbf5f2ae522 .inline-col-group.inline-col-group-center {
+    height: fit-content;
+  }
+
+  #s202507018bdbf5f2ae522 .inline-col-group {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* 모바일 KR + 텍스트 같은 높이 정렬 */
+  @media (max-width: 991px) {
+    #w20250701fac9bf184a6aa {
+    display: none !important;
+  }
+    #s202507018bdbf5f2ae522 .inline-col-group > .inline-col:first-child {
+  padding: 22px !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+    #s202507018bdbf5f2ae522 .inline-col-group > .inline-col:nth-child(2) {
+  padding-left: 0 !important;
+}
+    #s202507018bdbf5f2ae522 .inline-col-group {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      height: 64px !important;
+      overflow: visible !important;
+    }
+
+    #s202507018bdbf5f2ae522 .inline-col {
+      display: flex !important;
+      align-items: center !important;
+      height: 64px !important;
+      width: auto !important;
+      min-width: 0 !important;
+      flex-shrink: 1 !important;
+    }
+
+    #w20250901d30d73ce03676 {
+      flex-shrink: 0 !important;
+    }
+
+    #w202507014404b9bda7f95 {
+      flex: 1 1 auto !important;
+      overflow: hidden !important;
+    }
+
+    #s202507018bdbf5f2ae522 .text-table._text_table {
+      width: 100% !important;
+    }
+  }
+</style>
+
+<!-- hamburger menu to x -->
+<style>
+  .customMenu {
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transform: rotate(90deg);
+    border-bottom: solid 1px rgba(30, 26, 59, 0.2);
+  }
+
+  .customMenu p {
+    margin: 0;
+    display: block;
+    height: 1px;
+    width: 35px;
+    transition: all 0.4s ease;
+    position: absolute;
+    transform: rotate(0deg);
+    background-color: #bb956f !important;
+  }
+
+  .customMenu p:first-child {
+    width: 35px;
+    top: 28px;
+    left: 14.5px;
+  }
+
+  .customMenu p:last-child {
+    width: 20px;
+    top: 36px;
+    left: 22px;
+  }
+
+  .customMenu[aria-expanded="true"] p {
+    top: 30px;
+  }
+
+  .customMenu[aria-expanded="true"] p:first-child {
+    transform: rotate(45deg);
+    width: 30px;
+    left: 15.5px;
+  }
+
+  .customMenu[aria-expanded="true"] p:last-child {
+    transform: rotate(-45deg);
+    width: 30px;
+    left: 15.5px !important;
+  }
+</style>
+
+<style>
+  #w20250826fabef1ba6c6de {
+    transform: rotate(90deg) !important;
+    transform-origin: center !important;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-top: 1px solid rgba(30, 26, 59, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: transparent;
+  }
+
+  #w20250826fabef1ba6c6de .dropdown-menu {
+    position: absolute !important;
+    top: 50% !important;
+    left: 100% !important;
+    transform: translateY(-50%) !important;
+    margin-left: 15px !important;
+    border: 1px solid rgba(187,149,111,0.5) !important;
+    border-radius: 0px !important;
+    z-index: 9999 !important;
+  }
+
+  #w20250826fabef1ba6c6de .dropdown-menu li {
+    white-space: nowrap !important;
+  }
+
+  #w20250826fabef1ba6c6de .arrow,
+  #w20250826fabef1ba6c6de .arrow.fixed_transform,
+  #w20250901d30d73ce03676 .arrow,
+  #w20250901d30d73ce03676 .arrow.fixed_transform {
+    display: none !important;
+  }
+
+  #w20250826fabef1ba6c6de .global_text,
+  #w20250901d30d73ce03676 .global_text {
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  #w20250826fabef1ba6c6de .global_text::after,
+  #w20250901d30d73ce03676 .global_text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ffffff;
+  }
+</style>
+
+<!-- 상단 메뉴 배경 색상 변경 스크립트(PC) -->
+<script>
+  (function () {
+    if (window.innerWidth < 992) return;
+
+    let initialized = false;
+
+    function initMenu() {
+      if (initialized) return true;
+
+      const navElement = document.querySelector('#s2025070198187fb0bd6e3');
+      if (!navElement) return false;
+
+      const sections = document.querySelectorAll('.section_wrap.pc_section');
+      if (sections.length === 0) return false;
+
+      const darkSections = [
+        's202507015b37210bd8139',
+        's202507012de9911fded25',
+        's20250826cb316a1ecba50',
+        's202507018d8322a2fd389',
+        's202507015a429359b165a',
+        's20250701f457bab25e7df'
+      ];
+
+      const lightSections = [
+        's20250701dbcd534faee2c',
+        's20250701cfd3071397a2a',
+        's2025070113fe458cba567'
+      ];
+
+      const excludedSections = [''];
+
+      const textSpans = navElement.querySelectorAll('.custom-flow-wrap span');
+      const menu = navElement.querySelectorAll('.menuToggle.customMenu');
+      const menuDivs = navElement.querySelectorAll('.menuToggle.customMenu p');
+      const globalTexts = navElement.querySelectorAll('.global_text');
+
+      const navStyles = {
+        opaque: {
+          backgroundColor: 'rgba(30, 26, 59, 0.25)',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+        light: {
+          backgroundColor: '#fff',
+          color: '#1e1a3b',
+          borderColor: 'rgba(30, 26, 59, 0.2)',
+        },
+        dark: {
+          backgroundColor: '#1e1a3b',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+      };
+
+      function updateStyles(currentStyle) {
+        Object.assign(navElement.style, {
+          backgroundColor: currentStyle.backgroundColor,
+          color: currentStyle.color,
+          borderColor: currentStyle.borderColor,
+        });
+
+        textSpans.forEach((span) => {
+          span.style.color = currentStyle.color;
+        });
+
+        menuDivs.forEach((p) => {
+          p.style.setProperty('background-color', currentStyle.color, 'important');
+        });
+
+        menu.forEach((div) => {
+          div.style.borderColor = currentStyle.borderColor;
+        });
+
+        globalTexts.forEach((text) => {
+          text.style.color = currentStyle.color;
+        });
+
+        const krWidget = document.querySelector('#w20250826fabef1ba6c6de');
+        if (krWidget) {
+          krWidget.style.borderTopColor = currentStyle.borderColor;
+        }
+      }
+
+      menu.forEach(function (menuBtn) {
+        menuBtn.addEventListener('click', function () {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          if (!expanded) {
+            updateStyles(navStyles.dark);
+          } else {
+            setTimeout(() => {
+              updateStyles(navStyles.light);
+            }, 1600);
+          }
+        });
+      });
+
+      sections.forEach((section, index) => {
+        if (excludedSections.includes(section.id)) return;
+        if (darkSections.includes(section.id)) {
+          section.dataset.background = 'dark';
+        } else if (lightSections.includes(section.id)) {
+          section.dataset.background = 'light';
+        } else if (index !== 0 && index <= 3) {
+          section.dataset.background = 'opaque';
+        } else {
+          section.dataset.background = 'light';
+        }
+      });
+
+      function updateNavBackground() {
+        if (window.pageXOffset === 0 && window.pageYOffset === 0) {
+          updateStyles(navStyles.light);
+          return;
+        }
+
+        let currentStyle = null;
+        let targetSection = null;
+        let minDistance = Infinity;
+
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (excludedSections.includes(section.id)) return;
+
+          if (rect.left <= 50 && rect.left > -rect.width && rect.right > 100 && rect.width > 0) {
+            const distance = Math.abs(rect.left);
+            if (distance <= minDistance) {
+              minDistance = distance;
+              targetSection = section;
+            }
+          }
+        });
+
+        if (targetSection && targetSection.dataset.background) {
+          currentStyle = navStyles[targetSection.dataset.background];
+        }
+
+        if (!currentStyle) currentStyle = navStyles.light;
+
+        if (currentStyle && navElement.style.backgroundColor !== currentStyle.backgroundColor) {
+          updateStyles(currentStyle);
+        }
+      }
+
+      window.addEventListener('scroll', updateNavBackground);
+      Object.assign(navElement.style, navStyles.light);
+      updateNavBackground();
+
+      initialized = true;
+      return true;
+    }
+
+    let attemptCount = 0;
+    const maxAttempts = 30;
+
+    function tryInitialize() {
+      if (initialized) return;
+      attemptCount++;
+      if (initMenu()) return;
+      if (attemptCount < maxAttempts) setTimeout(tryInitialize, 200);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryInitialize);
+    } else {
+      tryInitialize();
+    }
+
+    window.addEventListener('load', function() {
+      setTimeout(tryInitialize, 100);
+      setTimeout(tryInitialize, 500);
+      setTimeout(tryInitialize, 1000);
+    });
+
+  })();
+</script>
+
+<!-- 상단 메뉴 배경 색상 변경 스크립트(Mobile) -->
+<script>
+  (function () {
+    if (window.innerWidth > 991) return;
+
+    let initialized = false;
+
+    function initMenu() {
+      if (initialized) return true;
+
+      const navElement = document.querySelector('#s202507018bdbf5f2ae522');
+      if (!navElement) return false;
+
+      const sections = document.querySelectorAll('.section_wrap.mobile_section');
+      if (sections.length === 0) return false;
+
+      const darkSections = [
+        's202507015b37210bd8139',
+        's202507012de9911fded25',
+        's20250826cb316a1ecba50',
+        's202507018d8322a2fd389',
+        's202507015a429359b165a',
+        's20250701f457bab25e7df'
+      ];
+
+      const lightSections = [
+        's20250701dbcd534faee2c',
+        's20250701cfd3071397a2a',
+        's2025070113fe458cba567'
+      ];
+
+      const excludedSections = [''];
+
+      const textSpans = navElement.querySelectorAll('.custom-flow-wrap span');
+      const menu = navElement.querySelectorAll('.menuToggle.customMenu.mo');
+      const menuDivs = navElement.querySelectorAll('.menuToggle.customMenu.mo p');
+      const globalTexts = navElement.querySelectorAll('.global_text');
+
+      const navStyles = {
+        opaque: {
+          backgroundColor: 'rgba(30, 26, 59, 0.25)',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+        light: {
+          backgroundColor: '#fff',
+          color: '#1e1a3b',
+          borderColor: 'rgba(30, 26, 59, 0.2)',
+        },
+        dark: {
+          backgroundColor: '#1e1a3b',
+          color: '#fff',
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        },
+      };
+
+      function updateStyles(currentStyle) {
+        Object.assign(navElement.style, {
+          backgroundColor: currentStyle.backgroundColor,
+          color: currentStyle.color,
+          borderColor: currentStyle.borderColor,
+        });
+
+        textSpans.forEach((span) => {
+          span.style.color = currentStyle.color;
+        });
+
+        menuDivs.forEach((p) => {
+          p.style.backgroundColor = currentStyle.color;
+        });
+
+        menu.forEach((div) => {
+          div.style.borderColor = currentStyle.borderColor;
+        });
+
+        globalTexts.forEach((text) => {
+          text.style.color = currentStyle.color;
+        });
+
+        const krWidget = document.querySelector('#w20250826fabef1ba6c6de');
+        if (krWidget) {
+          krWidget.style.borderTopColor = currentStyle.borderColor;
+        }
+
+        // inline-col:first-child border-right 색상 동기화
+        const firstCol = navElement.querySelector('.inline-col-group > .inline-col:first-child');
+        if (firstCol) {
+          firstCol.style.setProperty('border-right-color', currentStyle.borderColor, 'important');
+        }
+      }
+
+      menu.forEach(function (menuBtn) {
+        menuBtn.addEventListener('click', function () {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          const targetWidget = document.querySelector('#w20250701fac9bf184a6aa');
+
+          if (!expanded) {
+            updateStyles(navStyles.dark);
+            if (targetWidget) targetWidget.style.setProperty('display', 'block', 'important');
+          } else {
+            setTimeout(() => {
+              updateStyles(navStyles.opaque);
+              if (targetWidget) targetWidget.style.setProperty('display', 'none', 'important');
+            }, 1600);
+          }
+        });
+      });
+
+      sections.forEach((section, index) => {
+        if (excludedSections.includes(section.id)) return;
+        if (darkSections.includes(section.id)) {
+          section.dataset.background = 'dark';
+        } else if (lightSections.includes(section.id)) {
+          section.dataset.background = 'light';
+        } else if (index <= 3) {
+          section.dataset.background = 'opaque';
+        } else {
+          section.dataset.background = 'light';
+        }
+      });
+
+      function updateNavBackground() {
+        let currentStyle = navStyles['opaque'];
+
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (excludedSections.includes(section.id)) return;
+
+          if (rect.top <= 30 && window.pageYOffset !== 0) {
+            currentStyle = navStyles[section.dataset.background];
+          }
+        });
+
+        if (currentStyle && navElement.style.backgroundColor !== currentStyle.backgroundColor) {
+          updateStyles(currentStyle);
+        }
+      }
+
+      window.addEventListener('scroll', updateNavBackground, { passive: true });
+      updateNavBackground();
+
+      initialized = true;
+      return true;
+    }
+
+    let attemptCount = 0;
+    const maxAttempts = 30;
+
+    function tryInitialize() {
+      if (initialized) return;
+      attemptCount++;
+      if (initMenu()) return;
+      if (attemptCount < maxAttempts) setTimeout(tryInitialize, 200);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryInitialize);
+    } else {
+      tryInitialize();
+    }
+
+    window.addEventListener('load', function() {
+      setTimeout(tryInitialize, 100);
+      setTimeout(tryInitialize, 500);
+      setTimeout(tryInitialize, 1000);
+    });
+
+  })();
+</script>
